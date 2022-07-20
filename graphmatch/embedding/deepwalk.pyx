@@ -26,8 +26,8 @@ import psutil
 
 cimport cython
 from ..base cimport Base
-import graph as graph2
-import walks as serialized_walks
+from . import graph as graph2
+from . import walks as serialized_walks
 from .skipgram import Skipgram
 
 
