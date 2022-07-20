@@ -35,17 +35,17 @@ cdef class AbstractGraphEditDistance(Base):
     cpdef double distance_ged(self,G,H):
         """
         Return the distance value between G and H
-        
+
         Parameters
         ----------
-        G : gmatch4py.Graph
+        G : graphmatch.Graph
             graph
-        H : gmatch4py.Graph
+        H : graphmatch.Graph
             graph
-        
+
         Returns
         -------
-        int 
+        int
             distance
         """
         cdef list opt_path = self.edit_costs(G,H)
@@ -54,38 +54,38 @@ cdef class AbstractGraphEditDistance(Base):
     def edit_path(self,G,H):
         """
         Return  the edit path along with the cost matrix and the selected indices from the Munkres Algorithm
-        
+
         Parameters
         ----------
         G : nx.Graph
             first graph
         H : nx.Graph
             second graph
-        
+
         Returns
         -------
-        np.array(1D), np.array(2D), (np.array(2D) if munkres) or (np.array(1,2) if scipy) 
+        np.array(1D), np.array(2D), (np.array(2D) if munkres) or (np.array(1,2) if scipy)
             edit_path, cost_matrix, munkres results
         """
         cost_matrix = self.create_cost_matrix(G,H).astype(float)
         index_path= munkres(cost_matrix)
         return cost_matrix[index_path], cost_matrix, index_path
-    
+
 
     cdef list edit_costs(self, G, H):
         """
         Return the optimal path edit cost list, to transform G into H
-        
+
         Parameters
         ----------
-        G : gmatch4py.Graph
+        G : graphmatch.Graph
             graph
-        H : gmatch4py.Graph
+        H : graphmatch.Graph
             graph
-        
+
         Returns
         -------
-        np.array 
+        np.array
             edit path
         """
         cdef np.ndarray cost_matrix = self.create_cost_matrix(G,H).astype(float)
@@ -104,17 +104,17 @@ cdef class AbstractGraphEditDistance(Base):
         delete 		| delete -> delete
 
         The delete -> delete region is filled with zeros
-        
+
         Parameters
         ----------
-        G : gmatch4py.Graph
+        G : graphmatch.Graph
             graph
-        H : gmatch4py.Graph
+        H : graphmatch.Graph
             graph
-        
+
         Returns
         -------
-        np.array 
+        np.array
             cost matrix
         """
         cdef int n,m
@@ -145,7 +145,7 @@ cdef class AbstractGraphEditDistance(Base):
     cdef double insert_cost(self, int i, int j, nodesH, H):
         """
         Return the insert cost of the ith nodes in H
-        
+
         Returns
         -------
         int
@@ -156,7 +156,7 @@ cdef class AbstractGraphEditDistance(Base):
     cdef double delete_cost(self, int i, int j, nodesG, G):
         """
         Return the delete cost of the ith nodes in H
-        
+
         Returns
         -------
         int
@@ -167,7 +167,7 @@ cdef class AbstractGraphEditDistance(Base):
     cpdef double substitute_cost(self, node1, node2, G, H):
         """
         Return the substitute cost of between the node1 in G and the node2 in H
-        
+
         Returns
         -------
         int

@@ -62,17 +62,17 @@ cdef class BP_2(Base):
     cdef double bp2(self, g1, g2):
         """
         Compute the BP2 similarity value between two `networkx.Graph`
-        
+
         Parameters
         ----------
-        g1 : gmatch4py.Graph
+        g1 : graphmatch.Graph
             First Graph
-        g2 : gmatch4py.Graph
+        g2 : graphmatch.Graph
             Second Graph
 
         Returns
         -------
-        float 
+        float
             similarity value
         """
         return np.min([self.distance_bp2(self.psi(g1,g2)),self.distance_bp2(self.psi(g2,g1))])
@@ -95,8 +95,8 @@ cdef class BP_2(Base):
     cdef list psi(self,g1,g2):
         """
         Return the optimal edit path :math:`\psi` based on BP2 algorithm.
-        
-        
+
+
         Parameters
         ----------
         g1 : networkx.Graph
@@ -134,9 +134,9 @@ cdef class BP_2(Base):
         Compute the Node Distance function
         Parameters
         ----------
-        g1 : gmatch4py.Graph
+        g1 : graphmatch.Graph
             First graph
-        g2 : gmatch4py.Graph
+        g2 : graphmatch.Graph
             Second graph
         n1 : int or str
             identifier of the first node
@@ -162,9 +162,9 @@ cdef class BP_2(Base):
         Compute HEDistance between edges of n1 and n2, respectively in g1 and g2
         Parameters
         ----------
-        g1 : gmatch4py.Graph
+        g1 : graphmatch.Graph
             First graph
-        g2 : gmatch4py.Graph
+        g2 : graphmatch.Graph
             Second graph
         n1 : int or str
             identifier of the first node
@@ -184,9 +184,9 @@ cdef class BP_2(Base):
         Compute Nearest Neighbour Distance between edges around n1 in G1  and edges around n2 in G2
         Parameters
         ----------
-        g1 : gmatch4py.Graph
+        g1 : graphmatch.Graph
             First graph
-        g2 : gmatch4py.Graph
+        g2 : graphmatch.Graph
             Second graph
         n1 : int or str
             identifier of the first node

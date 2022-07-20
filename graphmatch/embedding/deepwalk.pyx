@@ -28,7 +28,7 @@ cimport cython
 from ..base cimport Base
 import graph as graph2
 import walks as serialized_walks
-from skipgram import Skipgram
+from .skipgram import Skipgram
 
 
 p = psutil.Process(os.getpid())
@@ -44,7 +44,7 @@ except AttributeError:
 def process(gr, number_walks = 10, walk_length = 40, window_size = 5, vertex_freq_degree = False, workers = 1, representation_size = 64, max_memory_data_size = 1000000000, seed = 0):
     """
     Return a DeepWalk embedding for a graph
-    
+
     Parameters
     ----------
     gr : nx.Graph
@@ -65,13 +65,13 @@ def process(gr, number_walks = 10, walk_length = 40, window_size = 5, vertex_fre
         'Size to start dumping walks to disk, instead of keeping them in memory. (the default is 1000000000)
     seed : int, optional
         Seed for random walk generator (the default is 0)
-    
+
     Returns
     -------
     np.array
         DeepWalk embedding
     """
-    
+
     if len(gr.edges())<1:
         return np.zeros((1,representation_size))
     G = graph2.from_networkx(gr.copy(), undirected=gr.is_directed())
@@ -147,18 +147,18 @@ cdef class DeepWalk(Base):
     def extract_embedding(self, listgs):
         """
         Extract DeepWalk embedding of each graph in `listgs`
-        
+
         Parameters
         ----------
         listgs : list
             list of graphs
-        
+
         Returns
         -------
         list
             list of embeddings
         """
-        
+
         from tqdm import tqdm
         models =  Parallel(n_jobs = cpu_count())(delayed(process)(nx.Graph(g)) for g in tqdm(listgs,desc="Extracting Embeddings..."))
         return models
@@ -170,4 +170,3 @@ cdef class DeepWalk(Base):
         vector_matrix = np.array([mod.mean(axis=0) for mod in models])   # Average nodes representations
         cs = cosine_similarity(vector_matrix)
         return cs
-

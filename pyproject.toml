@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "graphmatch"
+version = "0.1.0"
+description = "A graph matching library for Python"
+authors = ["Mirko Lenz <mirko@mirkolenz.com>"]
+license = "MIT"
+include = ["graphmatch/**/*.so"]
+exclude = ["graphmatch/**/*.pyx", "graphmatch/**/*.pxd"]
+
+[tool.poetry.build]
+script = "build.py"
+generate-setup-file = false
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+decorator = "^5.1.1"
+scipy = "^1.8.1"
+networkx = "2.1"
+numpy = "^1.23.1"
+scikit-learn = "^1.1.1"
+tqdm = "^4.64.0"
+pandas = "^1.4.3"
+joblib = "^1.1.0"
+gensim = "^4.2.0"
+psutil = "^5.9.1"
+Cython = "^0.29.30"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "cython"]
+build-backend = "poetry.core.masonry.api"
