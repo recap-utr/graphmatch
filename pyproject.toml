@@ -7,7 +7,7 @@ license = "MIT"
 include = [
     "graphmatch/**/*.so",
     "graphmatch/**/*.py",
-    "munkres*.so",
+    "munkres/**/*.so",
     "munkres/**/*.py",
 ]
 exclude = [
