@@ -4,8 +4,20 @@ version = "0.1.0"
 description = "A graph matching library for Python"
 authors = ["Mirko Lenz <mirko@mirkolenz.com>"]
 license = "MIT"
-include = ["graphmatch/**/*.so"]
-exclude = ["graphmatch/**/*.pyx", "graphmatch/**/*.pxd"]
+include = [
+    "graphmatch/**/*.so",
+    "graphmatch/**/*.py",
+    "munkres*.so",
+    "munkres/**/*.py",
+]
+exclude = [
+    "graphmatch/**/*.pyx",
+    "graphmatch/**/*.pxd",
+    "munkres/**/*.pyx",
+    "munkres/**/*.pxd",
+    "munkres/**/*.cpp",
+    "munkres/**/*.h",
+]
 
 [tool.poetry.build]
 script = "build.py"

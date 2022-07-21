@@ -49,22 +49,33 @@ def run_cythonize(extensions: t.List[Extension]) -> t.List[Extension]:
         extensions,
         build_dir=str(CYTHON_BUILD_DIR),
         annotate=False,
-        nthreads=mp.cpu_count(),
+        nthreads=mp.cpu_count() * 2,
         language_level=3,
         force=True,
     )
 
 
 def build(setup_kwargs: t.MutableMapping[str, t.Any]):
-    extensions = run_cythonize(collect_extensions())
+    extensions = collect_extensions()
 
-    dist = Distribution({"name": "graphmatch", "ext_modules": extensions})
+    extensions.append(
+        Extension(
+            "munkres.munkres",
+            ["munkres/munkres.pyx", "munkres/cpp/Munkres.cpp"],
+            include_dirs=[get_numpy_include(), "munkres/cpp"],
+            language="c++",
+        )
+    )
+
+    cyton_extensions = run_cythonize(extensions)
+
+    dist = Distribution({"name": "graphmatch", "ext_modules": cyton_extensions})
 
     # cmd = t.cast(build_ext_type, build_ext(dist))
     cmd = build_ext(dist)
     cmd.ensure_finalized()  # type: ignore
-    cmd.run()
-    cmd.copy_extensions_to_source()
+    cmd.run()  # type: ignore
+    cmd.copy_extensions_to_source()  # type: ignore
 
     return setup_kwargs
 
